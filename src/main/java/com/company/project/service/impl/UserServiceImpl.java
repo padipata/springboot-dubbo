@@ -18,5 +18,4 @@ import javax.annotation.Resource;
 public class UserServiceImpl extends AbstractService<User> implements UserService {
     @Resource
     private UserMapper userMapper;
-
 }

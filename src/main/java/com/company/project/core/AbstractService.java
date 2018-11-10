@@ -25,14 +25,17 @@ public abstract class AbstractService<T> implements Service<T> {
     }
 
     public void save(T model) {
+        System.out.println(model);
         mapper.insertSelective(model);
     }
 
     public void save(List<T> models) {
+        System.out.println(models);
         mapper.insertList(models);
     }
 
     public void deleteById(Integer id) {
+        System.out.println(id);
         mapper.deleteByPrimaryKey(id);
     }
 
@@ -41,10 +44,12 @@ public abstract class AbstractService<T> implements Service<T> {
     }
 
     public void update(T model) {
+        System.out.println(model);
         mapper.updateByPrimaryKeySelective(model);
     }
 
     public T findById(Integer id) {
+        System.out.println(id);
         return mapper.selectByPrimaryKey(id);
     }
 
@@ -62,10 +67,12 @@ public abstract class AbstractService<T> implements Service<T> {
     }
 
     public List<T> findByIds(String ids) {
+        System.out.println(ids);
         return mapper.selectByIds(ids);
     }
 
     public List<T> findByCondition(Condition condition) {
+        System.out.println(condition);
         return mapper.selectByCondition(condition);
     }
 
