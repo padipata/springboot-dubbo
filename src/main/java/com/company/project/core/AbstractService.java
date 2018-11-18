@@ -25,44 +25,26 @@ public abstract class AbstractService<T> implements Service<T> {
     }
 
     public void save(T model) {
-        System.out.println("------------传参------------");
-        System.out.println(model);
-        System.out.println("---------------------------");
         mapper.insertSelective(model);
     }
 
     public void save(List<T> models) {
-        System.out.println("------------传参------------");
-        System.out.println(models);
-        System.out.println("---------------------------");
         mapper.insertList(models);
     }
 
     public void deleteById(Integer id) {
-        System.out.println("------------传参------------");
-        System.out.println(id);
-        System.out.println("---------------------------");
         mapper.deleteByPrimaryKey(id);
     }
 
     public void deleteByIds(String ids) {
-        System.out.println("------------传参------------");
-        System.out.println(ids);
-        System.out.println("---------------------------");
         mapper.deleteByIds(ids);
     }
 
     public void update(T model) {
-        System.out.println("------------传参------------");
-        System.out.println(model);
-        System.out.println("---------------------------");
         mapper.updateByPrimaryKeySelective(model);
     }
 
     public T findById(Integer id) {
-        System.out.println("------------传参------------");
-        System.out.println(id);
-        System.out.println("---------------------------");
         return mapper.selectByPrimaryKey(id);
     }
 
@@ -80,16 +62,10 @@ public abstract class AbstractService<T> implements Service<T> {
     }
 
     public List<T> findByIds(String ids) {
-        System.out.println("------------传参------------");
-        System.out.println(ids);
-        System.out.println("---------------------------");
         return mapper.selectByIds(ids);
     }
 
     public List<T> findByCondition(Condition condition) {
-        System.out.println("------------传参------------");
-        System.out.println(condition);
-        System.out.println("---------------------------");
         return mapper.selectByCondition(condition);
     }
 
