@@ -21,6 +21,8 @@ import static com.company.project.core.ProjectConstant.*;
 
 /**
  * Mybatis & Mapper & PageHelper 配置
+ *
+ * Created by Padipata on 2018/11/10.
  */
 @Configuration
 public class MybatisConfigurer {

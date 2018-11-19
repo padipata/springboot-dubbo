@@ -2,6 +2,8 @@ package com.company.project.core;
 
 /**
  * 响应码枚举，参考HTTP状态码的语义
+ *
+ * Created by Padipata on 2018/11/10.
  */
 public enum ResultCode {
     SUCCESS(200),//成功

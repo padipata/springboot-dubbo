@@ -15,7 +15,7 @@ import java.util.List;
 * Created by ${author} on ${date}.
 */
 @RestController
-@RequestMapping("${baseRequestMapping}")
+@RequestMapping("/api/v2${baseRequestMapping}")
 public class ${modelNameUpperCamel}Controller {
     @Resource
     private ${modelNameUpperCamel}Service ${modelNameLowerCamel}Service;

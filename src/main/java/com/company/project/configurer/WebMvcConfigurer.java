@@ -38,6 +38,8 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 /**
  * Spring MVC 配置
+ *
+ * Created by Padipata on 2018/11/10.
  */
 @Configuration
 public class WebMvcConfigurer extends WebMvcConfigurerAdapter {

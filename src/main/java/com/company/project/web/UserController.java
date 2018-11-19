@@ -17,10 +17,10 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by CodeGenerator on 2018/11/10.
+ * Created by Padipata on 2018/11/10.
  */
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api/v2/user")
 public class UserController {
     @Resource
     private UserService userService;

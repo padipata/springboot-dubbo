@@ -7,6 +7,8 @@ import java.util.List;
 
 /**
  * Service 层 基础接口，其他Service 接口 请继承该接口
+ *
+ * Created by Padipata on 2018/11/10.
  */
 public interface Service<T> {
     void save(T model);//持久化

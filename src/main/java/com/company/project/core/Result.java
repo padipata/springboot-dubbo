@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSON;
 
 /**
  * 统一API响应结果封装
+ *
+ * Created by Padipata on 2018/11/10.
  */
 public class Result<T> {
     private int code;

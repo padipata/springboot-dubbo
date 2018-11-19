@@ -8,13 +8,11 @@ import org.springframework.context.annotation.Configuration;
 /**
  * Jwt configuration
  *
- * @program: users
- * @author: root
- * @create: 2018-11-16 11:18
- **/
+ * Created by Padipata on 2018/11/10.
+ */
 @Configuration
 public class JwtConfigurer {
-    // 秘钥
+    // jwt秘钥
     public static final String KEY = "yipage";
 
     @Bean
