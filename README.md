@@ -2,7 +2,6 @@
 springboot-dubbo 是一个基于Spring Boot & MyBatis & dubbo的种子项目，用于快速构建 RESTful API 项目； 稳定、简单、快速，使我们摆脱那些重复劳动，专注于业务代码的编写，减少加班。
 
 ## 特征&提供
-- 最佳实践的项目结构、配置文件、精简的POM（[查看项目结构图](https://github.com/lihengming/java-codes/blob/master/shared-resources/github-images/project-struct.png)）
 - 统一响应结果封装及生成工具
 - 统一异常处理
 - 简单的接口签名认证
