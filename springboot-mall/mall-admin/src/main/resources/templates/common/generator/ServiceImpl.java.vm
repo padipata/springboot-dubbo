@@ -1,0 +1,59 @@
+package ${package}.${module}.service.impl;
+
+import com.github.pagehelper.PageHelper;
+
+import ${package}.mapper.${Module}${className}Mapper;
+
+import ${package}.model.${Module}${className};
+
+import ${package}.model.${Module}${className}Example;
+import ${package}.${module}.service.${className}Service;
+import org.springframework.beans.BeanUtils;
+import javax.annotation.Resource;
+import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+
+import java.util.List;
+
+/**
+ * 商品品牌Service实现类
+ * Created by macro on 2018/4/26.
+ */
+@Service
+public class ${className}ServiceImpl implements ${className}Service {
+    @Resource
+    private ${Module}${className}Mapper ${classname}Mapper;
+    
+
+
+    @Override
+    public int create${className}(${Module}${className} ${classname}) {
+        return ${classname}Mapper.insert(${classname});
+    }
+
+    @Override
+    public int update${className}(Long id, ${Module}${className} ${classname}) {
+        ${classname}.setId(id);
+        return ${classname}Mapper.updateByPrimaryKeySelective(${classname});
+    }
+
+    @Override
+    public int delete${className}(Long id) {
+        return ${classname}Mapper.deleteByPrimaryKey(id);
+    }
+
+
+    @Override
+    public List<${Module}${className}> list${className}(${Module}${className} ${classname}, int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        return ${classname}Mapper.selectByExample(new ${Module}${className}Example());
+
+    }
+
+    @Override
+    public ${Module}${className} get${className}(Long id) {
+        return ${classname}Mapper.selectByPrimaryKey(id);
+    }
+
+   
+}
