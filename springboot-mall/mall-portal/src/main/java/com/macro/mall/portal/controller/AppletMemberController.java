@@ -211,7 +211,7 @@ public class AppletMemberController extends ApiBaseAction {
             objectMap.put("count", count);
             return new CommonResult().success(objectMap);
         }
-        return new com.macro.mall.portal.domain.CommonResult().failed();
+        return new CommonResult().failed();
 
     }
 }

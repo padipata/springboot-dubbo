@@ -5,9 +5,8 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * @Auther: shenzhuan
- * @Date: 2019/2/23 13:12
- * @Description:
+ * @Auther: root
+ * @Date: 2019/2/23
  */
 @Data
 public class OrderStatusCount implements Serializable{

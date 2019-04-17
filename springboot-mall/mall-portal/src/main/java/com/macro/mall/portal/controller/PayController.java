@@ -6,10 +6,12 @@ import com.macro.mall.dto.OmsOrderQueryParam;
 import com.macro.mall.model.OmsOrder;
 import com.macro.mall.model.OmsOrderItem;
 import com.macro.mall.model.UmsMember;
+import com.macro.mall.portal.config.AliAppletProperties;
 import com.macro.mall.portal.config.WxAppletProperties;
 import com.macro.mall.portal.service.OmsOrderService;
 import com.macro.mall.portal.service.OmsPortalOrderService;
 import com.macro.mall.portal.service.UmsMemberService;
+import com.macro.mall.portal.uploader.OrderInfoUtil2_0;
 import com.macro.mall.portal.util.*;
 import com.macro.mall.portal.util.applet.WechatRefundApiResult;
 import com.macro.mall.portal.util.applet.WechatUtil;
@@ -25,10 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 /**
  * 作者: @author Harmon <br>
@@ -49,6 +48,7 @@ public class PayController extends ApiBaseAction {
     private UmsMemberService umsMemberService;
     @Autowired
     private WxAppletProperties wxAppletProperties;
+
 
     /**
      * 获取支付的请求参数
@@ -321,4 +321,56 @@ public class PayController extends ApiBaseAction {
     public static String callbakcXml(String orderNum) {
         return "<xml><appid><![CDATA[wx2421b1c4370ec43b]]></appid><attach><![CDATA[支付测试]]></attach><bank_type><![CDATA[CFT]]></bank_type><fee_type><![CDATA[CNY]]></fee_type> <is_subscribe><![CDATA[Y]]></is_subscribe><mch_id><![CDATA[10000100]]></mch_id><nonce_str><![CDATA[5d2b6c2a8db53831f7eda20af46e531c]]></nonce_str><openid><![CDATA[oUpF8uMEb4qRXf22hE3X68TekukE]]></openid> <out_trade_no><![CDATA[" + orderNum + "]]></out_trade_no>  <result_code><![CDATA[SUCCESS]]></result_code> <return_code><![CDATA[SUCCESS]]></return_code><sign><![CDATA[B552ED6B279343CB493C5DD0D78AB241]]></sign><sub_mch_id><![CDATA[10000100]]></sub_mch_id> <time_end><![CDATA[20140903131540]]></time_end><total_fee>1</total_fee><trade_type><![CDATA[JSAPI]]></trade_type><transaction_id><![CDATA[1004400740201409030005092168]]></transaction_id></xml>";
     }
+
+    /**
+     * 支付宝订单回调接口
+     *
+     * @return
+     */
+    @RequestMapping(value = "/alinotify", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @ApiOperation(value = "支付宝订单回调接口")
+    @ResponseBody
+    public String alinotify(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            String out_trade_no = request.getParameter("out_trade_no");
+            String total_amount = request.getParameter("total_amount");
+            return "success";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "false";
+        }
+    }
+
+    @RequestMapping(value = "/aliPay", method = RequestMethod.GET)
+    @ApiOperation(value = "获取支付宝支付的请求参数")
+    public Object aliPay(@RequestParam(value = "id", required = false, defaultValue = "0") Long id) {
+        OmsOrderDetail orderInfo = orderService.detail(id);
+
+        if (null == orderInfo) {
+            return toResponsObject(400, "订单已取消", "");
+        }
+
+        if (orderInfo.getStatus() != 0) {
+            return toResponsObject(400, "订单已支付，请不要重复操作", "");
+        }
+
+        String nonceStr = CharUtil.getRandomString(32);
+
+        //支付宝支付
+        boolean rsa2 = (AliAppletProperties.RSA2_PRIVATE.length() > 0);
+        Map<String, String> params = OrderInfoUtil2_0.buildOrderParamMap(AliAppletProperties.APPID, rsa2, "超市-支付", orderInfo.getTotalAmount().doubleValue(), nonceStr, AliAppletProperties.AlipayReturnAddress);
+        String orderParam = OrderInfoUtil2_0.buildOrderParam(params);
+        String privateKey = rsa2 ? AliAppletProperties.RSA2_PRIVATE : AliAppletProperties.RSA_PRIVATE;
+        String sign = OrderInfoUtil2_0.getSign(params, privateKey, rsa2);
+        String orderInfoParm = orderParam + "&" + sign;
+
+        Map<String, Object> map = new HashMap();
+
+        map.put("status", "1");
+        map.put("data", orderInfoParm);
+
+        return map;
+
+    }
+
 }

@@ -3,7 +3,9 @@ package com.macro.mall.util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -19,6 +21,12 @@ public class DateUtils {
      * 时间格式(yyyy-MM-dd HH:mm:ss)
      */
     public final static String DATE_TIME_PATTERN = "yyyy-MM-dd HH:mm:ss";
+
+    private static final DateFormat FORMATER_DATE_YMD = new SimpleDateFormat("yyyy-MM-dd");
+
+    public static Date toDate(String d) throws Exception {
+        return FORMATER_DATE_YMD.parse(d);
+    }
 
     public static String format(Date date) {
         return format(date, DATE_PATTERN);
@@ -87,5 +95,138 @@ public class DateUtils {
         }
         r += "前";
         return r;
+    }
+
+    public static String addDay(Date s, int n) {
+
+        SimpleDateFormat FORMATER_DATE_YMD = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar cd = Calendar.getInstance();
+        cd.setTime(s);
+        cd.add(Calendar.DATE, n);//增加一天
+        //cd.add(Calendar.MONTH, n);//增加一个月
+        return FORMATER_DATE_YMD.format(cd.getTime());
+
+    }
+
+    /**
+     * 返回当前时间的"yyyy-MM-dd"格式字符串
+     */
+    public static String currentDay() {
+        DateFormat formater = new SimpleDateFormat("yyyy-MM-dd");
+        return formater.format(new Date());
+    }
+
+    public static int calculateDaysNew(Date first, Date second) {
+        int days = 0;
+
+        if (second.before(first)) {
+            Calendar calendar1 = Calendar.getInstance();
+            calendar1.setTime(second);
+            calendar1.set(Calendar.HOUR_OF_DAY, 0);
+            calendar1.set(Calendar.MINUTE, 0);
+            calendar1.set(Calendar.SECOND, 0);
+            calendar1.set(Calendar.MILLISECOND, 0);
+            Calendar calendar2 = Calendar.getInstance();
+            calendar2.setTime(first);
+            calendar2.set(Calendar.HOUR_OF_DAY, 0);
+            calendar2.set(Calendar.MINUTE, 0);
+            calendar2.set(Calendar.SECOND, 0);
+            calendar2.set(Calendar.MILLISECOND, 0);
+            while (calendar1.compareTo(calendar2) != 0) {
+                calendar1.add(Calendar.DAY_OF_YEAR, 1);
+                days++;
+            }
+            days = -days;
+        } else {
+            Calendar calendar1 = Calendar.getInstance();
+            calendar1.setTime(first);
+            calendar1.set(Calendar.HOUR_OF_DAY, 0);
+            calendar1.set(Calendar.MINUTE, 0);
+            calendar1.set(Calendar.SECOND, 0);
+            calendar1.set(Calendar.MILLISECOND, 0);
+            Calendar calendar2 = Calendar.getInstance();
+            calendar2.setTime(second);
+            calendar2.set(Calendar.HOUR_OF_DAY, 0);
+            calendar2.set(Calendar.MINUTE, 0);
+            calendar2.set(Calendar.SECOND, 0);
+            calendar2.set(Calendar.MILLISECOND, 0);
+            while (calendar1.compareTo(calendar2) != 0) {
+                calendar1.add(Calendar.DAY_OF_YEAR, 1);
+                days++;
+            }
+        }
+
+        return days;
+    }
+
+    /**
+     * 获取当月的第一天
+     *
+     * @return
+     */
+    public static String geFirstDayByMonth() {
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.MONTH, 0);
+        c.set(Calendar.DAY_OF_MONTH, 1);//设置为1号,当前日期既为本月第一天
+        return FORMATER_DATE_YMD.format(c.getTime());
+    }
+    /**
+     * 获取当月的第一天
+     *
+     * @return
+     */
+    public static Date geFirstDayDateByMonth() {
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.MONTH, 0);
+        c.set(Calendar.DAY_OF_MONTH, 1);//设置为1号,当前日期既为本月第一天
+        return c.getTime();
+    }
+    /**
+     * 获取当月的最后一天
+     *
+     * @return
+     */
+    public static String geLastDayByMonth() {
+        Calendar ca = Calendar.getInstance();
+        ca.set(Calendar.DAY_OF_MONTH, ca.getActualMaximum(Calendar.DAY_OF_MONTH));
+        return FORMATER_DATE_YMD.format(ca.getTime());
+    }
+
+    /**
+     * 获取当前周的第一天：
+     * @return
+     */
+    public static Date getFirstDayOfWeek() {
+        Calendar cal = Calendar.getInstance();
+        try {
+            cal.setTime(new Date());
+            cal.set(Calendar.DAY_OF_WEEK, 1);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return cal.getTime();
+    }
+
+    /**
+     * 获取当前周最后一天
+     * @return
+     */
+    public static Date getLastDayOfWeek() {
+        Calendar cal = Calendar.getInstance();
+
+        try {
+            cal.setTime(new Date());
+            cal.set(Calendar.DAY_OF_WEEK, 1);
+            cal.set(Calendar.DATE, cal.get(Calendar.DATE) + 6);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+
+        return cal.getTime();
+    }
+    public static void main(String[] args) throws Exception {
+        System.out.println(DateUtils.addDay(new Date(), -7));
+        System.out.println(DateUtils.calculateDaysNew(DateUtils.toDate(DateUtils.addDay(new Date(), -7)), new Date()));
     }
 }

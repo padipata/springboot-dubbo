@@ -1,29 +1,21 @@
 package com.macro.mall.portal.controller;
 
 import com.macro.mall.annotation.IgnoreAuth;
-import com.macro.mall.dto.ConsultTypeCount;
 import com.macro.mall.dto.PmsProductCategoryWithChildrenItem;
 import com.macro.mall.dto.PmsProductQueryParam;
 import com.macro.mall.dto.PmsProductResult;
 import com.macro.mall.model.PmsProductAttribute;
 import com.macro.mall.model.PmsProductAttributeCategory;
-import com.macro.mall.model.PmsProductConsult;
 import com.macro.mall.model.UmsMember;
-import com.macro.mall.portal.constant.RedisKey;
 import com.macro.mall.portal.domain.CommonResult;
-import com.macro.mall.portal.domain.MemberProductCollection;
-//import com.macro.mall.portal.repository.MemberProductCollectionRepository;
 import com.macro.mall.portal.service.*;
-import com.macro.mall.portal.util.JsonUtil;
 import com.macro.mall.portal.vo.R;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 首页内容管理Controller
@@ -68,12 +60,11 @@ public class PmsGoodsController {
         return r;
     }
 
-    @IgnoreAuth
-    @GetMapping(value = "/product/queryProductList1")
-    public Object queryProductList1(PmsProductQueryParam productQueryParam) {
-
-        return new CommonResult().pageSuccess(pmsProductService.list(productQueryParam));
-    }
+//    @IgnoreAuth
+//    @GetMapping(value = "/product/queryProductList1")
+//    public Object queryProductList1(PmsProductQueryParam productQueryParam) {
+//        return new CommonResult().pageSuccess(pmsProductService.list(productQueryParam));
+//    }
 
     /**
      * 或者分类和分类下的商品
@@ -125,7 +116,7 @@ public class PmsGoodsController {
 //                productResult.setIs_favorite(2);
 //            }
 //        }
-        return new com.macro.mall.dto.CommonResult().success(productResult);
+        return new CommonResult().success(productResult);
     }
 
     @IgnoreAuth
@@ -136,7 +127,7 @@ public class PmsGoodsController {
                           @RequestParam(value = "pageSize", required = false, defaultValue = "5") Integer pageSize,
                           @RequestParam(value = "pageNum", required = false, defaultValue = "1") Integer pageNum) {
         List<PmsProductAttribute> productAttributeList = productAttributeService.getList(cid, type, pageSize, pageNum);
-        return new com.macro.mall.dto.CommonResult().pageSuccess(productAttributeList);
+        return new CommonResult().pageSuccess(productAttributeList);
     }
 
 //    @IgnoreAuth

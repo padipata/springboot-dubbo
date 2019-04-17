@@ -58,7 +58,7 @@ public class OmsPortalOrderController extends ApiBaseAction {
             List<OmsOrderItem> orderItemList = orderItemMapper.selectByExample(orderItemExample);
             order.setOrderItemList(orderItemList);
         }
-        return new com.macro.mall.dto.CommonResult().pageSuccess(orderList);
+        return new CommonResult().pageSuccess(orderList);
     }
 
     @ApiOperation("获取订单详情:订单信息、商品信息、操作记录")
